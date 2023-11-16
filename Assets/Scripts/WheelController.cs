@@ -78,17 +78,44 @@ public class WheelController : MonoBehaviour
         gasInput = Input.GetAxis("Vertical");
         
         gasInput = Mathf.Clamp01(gasInput);
-        
-        steeringInput = Input.GetAxis("Horizontal");
-        
-        slipAngle = Vector3.Angle(transform.forward, carRB.velocity - transform.forward);
         if (Mathf.Abs(gasInput) > 0 && isEngineRunning == 0)
         {
-            //StartCoroutine(GetComponent<EngineAudio>().StartEngine());
+            StartCoroutine(GetComponent<EngineAudion>().StartEngine());
             gearState = GearState.Running;
         }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("jestem tu");
+            brakeInput = 1;
+            
+        }
+        else
+        {
+            brakeInput = 0;
+        }
+        Debug.Log(gasInput);
+
+        steeringInput = Input.GetAxis("Horizontal");
+        slipAngle = Vector3.Angle(transform.forward, carRB.velocity - transform.forward);
+
         //fixed code to brake even after going on reverse by Andrew Alex 
         float movingDirection = Vector3.Dot(transform.forward, carRB.velocity);
+        if (gearState != GearState.Changing)
+        {
+            if (gearState == GearState.Neutral)
+            {
+                clutch = 0;
+                if (Mathf.Abs(gasInput) > 0) gearState = GearState.Running;
+            }
+            else
+            {
+                clutch = Input.GetKey(KeyCode.LeftShift) ? 0 : Mathf.Lerp(clutch, 1, Time.deltaTime);
+            }
+        }
+        else
+        {
+            clutch = 0;
+        }
         if (movingDirection < -0.5f && gasInput > 0)
         {
             brakeInput = Mathf.Abs(gasInput);
@@ -101,6 +128,7 @@ public class WheelController : MonoBehaviour
         {
             brakeInput = 0;
         }
+
         /*if(slipAngle < 120f)
         {
             if (gasInput < 0)
@@ -130,8 +158,9 @@ public class WheelController : MonoBehaviour
 
     void ApplyHorsePower()
     {
-        colliders.FLWheel.motorTorque=horsePower*gasInput;
-        colliders.FRWheel.motorTorque=horsePower*gasInput;
+        currentTorque = CalculateTorque();
+        colliders.RRWheel.motorTorque = currentTorque * gasInput;
+        colliders.RLWheel.motorTorque = currentTorque * gasInput;
     }
 
     float CalculateTorque()
