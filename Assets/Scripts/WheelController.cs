@@ -85,20 +85,17 @@ public class WheelController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("jestem tu");
-            brakeInput = 1;
-            
+            brakeInput = 1.0f;
         }
         else
         {
-            brakeInput = 0;
+            brakeInput = 0f;
         }
-        Debug.Log(gasInput);
 
         steeringInput = Input.GetAxis("Horizontal");
         slipAngle = Vector3.Angle(transform.forward, carRB.velocity - transform.forward);
 
-        //fixed code to brake even after going on reverse by Andrew Alex 
+        
         float movingDirection = Vector3.Dot(transform.forward, carRB.velocity);
         if (gearState != GearState.Changing)
         {
@@ -116,42 +113,12 @@ public class WheelController : MonoBehaviour
         {
             clutch = 0;
         }
-        if (movingDirection < -0.5f && gasInput > 0)
-        {
-            brakeInput = Mathf.Abs(gasInput);
-        }
-        else if (movingDirection > 0.5f && gasInput < 0)
-        {
-            brakeInput = Mathf.Abs(gasInput);
-        }
-        else
-        {
-            brakeInput = 0;
-        }
-
-        /*if(slipAngle < 120f)
-        {
-            if (gasInput < 0)
-            {
-                breakInput = 1;
-                gasInput = 0;
-            }
-            else
-            {
-                breakInput = 0;
-            }
-        }
-        else
-        {
-            breakInput = 0;
-        }*/
     }
 
     void ApplyBreak()
     {
         colliders.FRWheel.brakeTorque= brakeInput * brakePower * 0.7f;
         colliders.FLWheel.brakeTorque= brakeInput * brakePower * 0.7f;
-
         colliders.RRWheel.brakeTorque= brakeInput * brakePower * 0.3f;
         colliders.RLWheel.brakeTorque= brakeInput * brakePower * 0.3f;
     }
