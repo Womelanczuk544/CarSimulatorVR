@@ -29,7 +29,7 @@ public class WheelController : MonoBehaviour
     public AnimationCurve hpToRPMCurve;
     private GearState gearState;
 
-    private float speedClamped;
+    public float speedClamped;
     public int currentGear;
     public int isEngineRunning;
     public float RPM;
@@ -47,9 +47,9 @@ public class WheelController : MonoBehaviour
     public float sensitivity = 2f;
     public float[] gearRatios;
     public float differentialRatio;
-    private float currentTorque;
-    private float clutch;
-    private float wheelRPM;
+    public float currentTorque;
+    public float clutch;
+    public float wheelRPM;
     public float increaseGearRPM;
     public float decreaseGearRPM;
     public float changeGearTime = 0.5f;
