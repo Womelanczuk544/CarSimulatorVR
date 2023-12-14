@@ -11,26 +11,32 @@ public class Controller : MonoBehaviour
         rearWheelDrive,
         allWheelDrive
     }
-
     [SerializeField] private driveType drive;
 
-    public GameObject wheelMeshes, wheelColliders;
+    private GameObject wheelMeshes, wheelColliders;
     private InputManager IM;
+    public GameManager manager;
     private Rigidbody rigidBody;
     private WheelCollider[] wheels = new WheelCollider[4];
     private GameObject[] wheelMesh = new GameObject[4];
     private GameObject centerOfMass;
 
     [Header("Variables")]
-    public AnimationCurve enginePower;
-    public float DownForceValue = 50;
-    public float KPH;
     public float totalPower;
+    //public float maxRPM, minRPM;
+    public float KPH;
     public float wheelsRPM;
-    public float motorTorque = 200;
-    public float radius = 6;
-    public float brakePower = 4;
+    public float smoothTime = 0.01f;
+    public float engineRPM;
+    public float[] gears;
+    public bool reverse = false;
+    public int gearNum = 1; 
+    public AnimationCurve enginePower;
+
+    [Header("Debug")]
     public float[] slip = new float[4];
+
+    private float radius = 4, brakePower = 50000, DownForceValue = 100f;
 
     // Start is called before the first frame update
     void Start()
@@ -43,16 +49,22 @@ public class Controller : MonoBehaviour
     {
         addDownForce();
         animateWheels();
-        moveVehicle();
         steerVehicle();
         getObjects();
         getFriction();
+        calculateEnginePower();
+        shifter();
     }
 
     private void calculateEnginePower()
     {
         wheelRPM();
 
+        totalPower = enginePower.Evaluate(engineRPM) * (gears[gearNum]) * IM.vertical;
+        float velocity = 0.0f;
+        engineRPM = Mathf.SmoothDamp(engineRPM, 1000 + (Mathf.Abs(wheelsRPM) * 3.6f * (gears[gearNum])), ref velocity, smoothTime);
+
+        moveVehicle();
     }
 
     private void wheelRPM()
@@ -65,6 +77,15 @@ public class Controller : MonoBehaviour
             R++;
         }
         wheelsRPM = (R != 0 ) ? sum / R : 0;
+
+        if (wheelsRPM < 0 && !reverse)
+        {
+            reverse = true;
+        }
+        else if (wheelsRPM > 0 && reverse)
+        {
+            reverse = false;
+        }
     }
 
     private void moveVehicle()
@@ -102,6 +123,31 @@ public class Controller : MonoBehaviour
             wheels[2].brakeTorque = wheels[3].brakeTorque = 0;
         }
 
+    }
+
+    private void shifter()
+    {
+        if (!isGrounded()) return;
+        if (Input.GetKeyDown(KeyCode.E) && gearNum < gears.Length-1)
+        {
+            gearNum++;
+            manager.changeGear();
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Q) && gearNum > 0)
+        {
+            gearNum--;
+            manager.changeGear();
+        }
+
+    }
+
+    private bool isGrounded()
+    {
+        if (wheels[0].isGrounded && wheels[1].isGrounded && wheels[2].isGrounded && wheels[3].isGrounded)
+            return true;
+        else
+            return false;
     }
 
     private void steerVehicle()
