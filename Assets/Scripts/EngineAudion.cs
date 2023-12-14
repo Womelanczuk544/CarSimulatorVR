@@ -22,11 +22,11 @@ public class EngineAudion : MonoBehaviour
     public AudioSource startingSound;
 
 
-    private WheelController carController;
+    private Controller carController;
     // Start is called before the first frame update
     void Start()
     {
-        carController = GetComponent<WheelController>();
+        carController = GetComponent<Controller>();
         idleSound.volume = 0;
         runningSound.volume = 0;
         reverseSound.volume = 0;

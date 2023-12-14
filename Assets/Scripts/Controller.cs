@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Experimental.GlobalIllumination;
 
 public class Controller : MonoBehaviour
@@ -23,7 +25,7 @@ public class Controller : MonoBehaviour
 
     [Header("Variables")]
     public float totalPower;
-    //public float maxRPM, minRPM;
+    public float maxRPM = 6500, minRPM;
     public float KPH;
     public float wheelsRPM;
     public float smoothTime = 0.01f;
@@ -31,6 +33,7 @@ public class Controller : MonoBehaviour
     public float[] gears;
     public bool reverse = false;
     public int gearNum = 1; 
+    public int isEngineRunning = 0; 
     public AnimationCurve enginePower;
 
     [Header("Debug")]
@@ -47,12 +50,20 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.K) && isEngineRunning == 0)
+        {
+            Debug.Log("jo³");
+            StartCoroutine(GetComponent<EngineAudion>().StartEngine());
+        }
         addDownForce();
         animateWheels();
         steerVehicle();
         getObjects();
         getFriction();
-        calculateEnginePower();
+        if (isEngineRunning > 0)
+        {
+            calculateEnginePower();
+        }
         shifter();
     }
 
@@ -127,7 +138,7 @@ public class Controller : MonoBehaviour
 
     private void shifter()
     {
-        if (!isGrounded()) return;
+        //if (!isGrounded()) return;
         if (Input.GetKeyDown(KeyCode.E) && gearNum < gears.Length-1)
         {
             gearNum++;
@@ -216,5 +227,11 @@ public class Controller : MonoBehaviour
 
             slip[i] = wheelHit.forwardSlip;
         }
+    }
+
+    public float GetSpeedRatio()
+    {
+        var gas = Mathf.Clamp(Mathf.Abs(IM.vertical), 0.5f, 1f);
+        return engineRPM * gas / maxRPM;
     }
 }
