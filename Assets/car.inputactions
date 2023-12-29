@@ -1,0 +1,34 @@
+{
+    "name": "car",
+    "maps": [
+        {
+            "name": "car",
+            "id": "3694f84c-8dca-4ca1-a5c7-96fa34c30fa0",
+            "actions": [
+                {
+                    "name": "steeringWheel",
+                    "type": "Button",
+                    "id": "4d3e84e2-a4ad-4670-8f30-7440af183244",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "21852304-8f33-4af7-821f-6f5e3490ecfd",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "steeringWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

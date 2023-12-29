@@ -36,7 +36,7 @@ public class CurveMaker : MonoBehaviour
         Vector3[] points = new Vector3[resolution + 1];
         float totalLength = 0f;
 
-        for (int i = 0; i < resolution; i++)
+        for (int i = 0; i < resolution-2; i++)
         {
             float t1 = i / (float)resolution;
             float t2 = (i + 1) / (float)resolution;
@@ -51,7 +51,7 @@ public class CurveMaker : MonoBehaviour
         float currentDistance = 0f;
         int currentPointIndex = 0;
 
-        for (int i = 0; i < resolution; i++)
+        for (int i = 0; i < resolution-2; i++)
         {
             float t1 = i / (float)resolution;
             float t2 = (i + 1) / (float)resolution;
@@ -76,6 +76,8 @@ public class CurveMaker : MonoBehaviour
         }
 
         points[numberOfPrefabs] = CalculateBezierPoint(1.0f, startPoint.position, startPoint.position + new Vector3(curvature, 0, 0), endPoint.position); // Dodaj ostatni punkt
+
+        endPoint.gameObject.SetActive(false);
         return points;
     }
 
