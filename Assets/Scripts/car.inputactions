@@ -1,0 +1,214 @@
+{
+    "name": "car",
+    "maps": [
+        {
+            "name": "car",
+            "id": "3694f84c-8dca-4ca1-a5c7-96fa34c30fa0",
+            "actions": [
+                {
+                    "name": "steeringWheel",
+                    "type": "Value",
+                    "id": "4d3e84e2-a4ad-4670-8f30-7440af183244",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "gas",
+                    "type": "Value",
+                    "id": "59f7fd44-9d8e-4a09-b928-119d17d9d5a1",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "brake",
+                    "type": "Value",
+                    "id": "e67673b6-b10e-4db6-86a0-e4e5a268af88",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "clutch",
+                    "type": "Value",
+                    "id": "cc0998f8-87d3-4f7f-b3f4-4c98bdb2cf38",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "GearR",
+                    "type": "Button",
+                    "id": "6587d4f4-38f4-409b-8f7b-432774d93e05",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Gear1",
+                    "type": "Button",
+                    "id": "391ad9f6-2dc9-4264-bec9-76a5036ec732",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Gear2",
+                    "type": "Button",
+                    "id": "481018f7-2466-475b-92c9-41513a5faa54",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Gear3",
+                    "type": "Button",
+                    "id": "a66a0863-8f7a-42ce-a926-c81b4554cc98",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Gear4",
+                    "type": "Button",
+                    "id": "6812a230-a78a-4711-9d8b-46f15aa69fe5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Gear5",
+                    "type": "Button",
+                    "id": "cd7889f6-3032-400f-bb6e-026531923e43",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "61b6a31f-0a93-4c5b-a396-904da58b1f8e",
+                    "path": "<HID::44F B67F>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "gas",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e04d6a68-af82-4ef2-819f-c5bae4a39829",
+                    "path": "<HID::44F B67F>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "steeringWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88ac1f1d-7353-4ef7-847a-b7e735c376e4",
+                    "path": "<HID::44F B67F>/stick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f68fe03f-aa93-438f-87b8-2298e122b016",
+                    "path": "<HID::44F B67F>/slider",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "clutch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0e6ff60-1b06-4564-be1c-3c0662510547",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gear1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "365a0f44-d086-4afe-8359-c97af3b8ea94",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gear2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e9383de-fd24-4e94-8c12-88da00ded151",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gear3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df0fbb38-009c-482a-aad9-5102ab6c4f79",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gear4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21a10b49-6ee7-4c40-93e2-d99e80e43564",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gear5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9aeddf6f-5283-4746-9a91-06e2ce805a4a",
+                    "path": "<HID::Thustmaster T500 RS Gear Shift>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GearR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
