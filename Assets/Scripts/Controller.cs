@@ -32,14 +32,18 @@ public class Controller : MonoBehaviour
     public float engineRPM;
     public float[] gears;
     public bool reverse = false;
-    public int gearNum = 1; 
+    public int gearNum = 6; 
     public int isEngineRunning = 0; 
     public AnimationCurve enginePower;
+    private float smoothingFactor = 0.1f;
+    private float maxSteeringAngle = 180.0f;
+    public bool clutch = false;
+    public Transform steeringWheel;
 
     [Header("Debug")]
     public float[] slip = new float[4];
 
-    private float radius = 4, brakePower = 50000, DownForceValue = 100f;
+    private float radius = 4, brakePower = 500000, DownForceValue = 100f;
 
     // Start is called before the first frame update
     void Start()
@@ -53,27 +57,49 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K) && isEngineRunning == 0)
         {
             Debug.Log("jo³");
-            StartCoroutine(GetComponent<EngineAudion>().StartEngine());
+            StartCoroutine(GetComponent<EngineAudio>().StartEngine());
+        }
+        if (isEngineRunning == 0)
+        {
+            GetComponent<EngineAudio>().StopEngine();
         }
         addDownForce();
         animateWheels();
         steerVehicle();
         getObjects();
         getFriction();
-        if (isEngineRunning > 0)
-        {
-            calculateEnginePower();
-        }
+        RotateSteeringWheel(IM.horizontal);
+        checkClutch();
+        calculateEnginePower();
         shifter();
     }
 
     private void calculateEnginePower()
     {
         wheelRPM();
-
+        if(isEngineRunning == 0) 
+        {
+            totalPower = 0;
+            gearNum = 6;
+            manager.changeGear();
+        }
+        else if(clutch == false)
+        {
         totalPower = enginePower.Evaluate(engineRPM) * (gears[gearNum]) * IM.vertical;
+        }
+        else
+        {
+            totalPower = 0;
+        }
         float velocity = 0.0f;
-        engineRPM = Mathf.SmoothDamp(engineRPM, 1000 + (Mathf.Abs(wheelsRPM) * 3.6f * (gears[gearNum])), ref velocity, smoothTime);
+        if(isEngineRunning > 0)
+        {
+        engineRPM = Mathf.Abs(Mathf.SmoothDamp(engineRPM, 1000 + Mathf.Abs(wheelsRPM) * 3.6f * Mathf.Abs(gears[gearNum]), ref velocity, smoothTime));
+        }
+        else
+        {
+            engineRPM = 0;
+        }
 
         moveVehicle();
     }
@@ -82,13 +108,19 @@ public class Controller : MonoBehaviour
     {
         float sum = 0;
         int R = 0;
-        for(int i = 0; i < 4; i++)
+
+        // Pêtla sumuj¹ca prêdkoœci kó³
+        for (int i = 0; i < 4; i++)
         {
             sum += wheels[i].rpm;
             R++;
         }
-        wheelsRPM = (R != 0 ) ? sum / R : 0;
 
+        // Obliczanie wyg³adzonej wartoœci
+        float currentRPM = (R != 0) ? sum / R : 0;
+        wheelsRPM = Mathf.Lerp(wheelsRPM, currentRPM, smoothingFactor);
+
+        // Sprawdzenie kierunku obrotów i ustawienie flagi
         if (wheelsRPM < 0 && !reverse)
         {
             reverse = true;
@@ -139,26 +171,67 @@ public class Controller : MonoBehaviour
     private void shifter()
     {
         //if (!isGrounded()) return;
-        if (Input.GetKeyDown(KeyCode.E) && gearNum < gears.Length-1)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            gearNum++;
+            if(clutch == false)
+            {
+                isEngineRunning = 0;
+            }
+            gearNum = 1;
             manager.changeGear();
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Q) && gearNum > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            gearNum--;
+            if (clutch == false)
+            {
+                isEngineRunning = 0;
+            }
+            gearNum = 2;
             manager.changeGear();
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (clutch == false)
+            {
+                isEngineRunning = 0;
+            }
+            gearNum = 3;
+            manager.changeGear();
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (clutch == false)
+            {
+                isEngineRunning = 0;
+            }
+            gearNum = 4;
+            manager.changeGear();
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            if (clutch == false)
+            {
+                isEngineRunning = 0;
+            }
+            gearNum = 5;
+            manager.changeGear();
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            if (clutch == false)
+            {
+                isEngineRunning = 0;
+            }
+            gearNum = 0;
+            manager.changeGear();
+            return;
         }
 
-    }
-
-    private bool isGrounded()
-    {
-        if (wheels[0].isGrounded && wheels[1].isGrounded && wheels[2].isGrounded && wheels[3].isGrounded)
-            return true;
-        else
-            return false;
     }
 
     private void steerVehicle()
@@ -192,6 +265,17 @@ public class Controller : MonoBehaviour
             wheelMesh[i].transform.rotation= wheelRotation;
         }
     }
+    private void checkClutch()
+    {
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            clutch = true;
+        }
+        else
+        {
+            clutch= false;
+        }
+    }
     private void getObjects()
     {
         IM = GetComponent<InputManager>();
@@ -209,6 +293,7 @@ public class Controller : MonoBehaviour
         wheelMesh[3] = wheelMeshes.transform.Find("_RightRearWheel").gameObject;
 
         centerOfMass = GameObject.Find("mass");
+        steeringWheel = transform.Find("_SteeringWheel"); 
         rigidBody.centerOfMass = centerOfMass.transform.localPosition;
     }
 
@@ -232,6 +317,15 @@ public class Controller : MonoBehaviour
     public float GetSpeedRatio()
     {
         var gas = Mathf.Clamp(Mathf.Abs(IM.vertical), 0.5f, 1f);
-        return engineRPM * gas / maxRPM;
+        return  Mathf.Abs(engineRPM * gas / maxRPM);
+    }
+
+    void RotateSteeringWheel(float rotationInput)
+    {
+        // Mapuj wartoœæ wejœcia liniowo na zakres od -1 do 1 na k¹t od -maxSteeringAngle do maxSteeringAngle
+        float targetRotation = Mathf.Lerp(-maxSteeringAngle, maxSteeringAngle, (rotationInput + 1f) / 2f);
+
+        // Obróæ kierownicê na podstawie docelowego k¹ta
+        steeringWheel.localRotation = Quaternion.Euler(-17.5f, 180f, targetRotation);
     }
 }

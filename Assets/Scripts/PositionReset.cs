@@ -22,4 +22,5 @@ public class PositionReset : MonoBehaviour
             rbCar.angularVelocity = Vector3.zero;
         }
     }
+    
 }

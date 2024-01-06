@@ -32,7 +32,7 @@ public class CurveMaker : MonoBehaviour
     // Funkcja obliczaj¹ca punkty na krzywej Bezier'a równomiernie roz³o¿one
     Vector3[] CalculateEvenlySpacedPointsOnCurve()
     {
-        int resolution = numberOfPrefabs * 10; // Wartoœæ mo¿esz dostosowaæ
+        int resolution = numberOfPrefabs * 10; 
         Vector3[] points = new Vector3[resolution + 1];
         float totalLength = 0f;
 

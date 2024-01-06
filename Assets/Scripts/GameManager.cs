@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
     public TextMesh gearNum;
     private float startPosition = 39f, endPosition = -220f;
     private float desieredPositoion;
+    private string speed = "KM/H ";
+    private string gear = "Gear ";
    
 
     // Update is called once per frame
     void Update()
     {
-        kph.text = RR.KPH.ToString("0");
+        kph.text = speed + RR.KPH.ToString("0");
         updateNeedle();
     }
 
@@ -29,7 +31,8 @@ public class GameManager : MonoBehaviour
     }
     public void changeGear()
     {
-        if (RR.gearNum == 0) gearNum.text = "R";
-        else gearNum.text = RR.gearNum.ToString();
+        if (RR.gearNum == 0)gearNum.text = gear + "R";
+        else if (RR.gearNum == 6) gearNum.text = gear + "N";
+        else gearNum.text = gear + RR.gearNum.ToString();
     }
 }

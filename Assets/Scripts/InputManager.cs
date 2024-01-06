@@ -134,5 +134,8 @@ public class InputManager : MonoBehaviour
         vertical = gasInput;
         horizontal = sterringInput;
         handBreak = (brakeInput != 0)? true : false;
+        vertical = Input.GetAxis ("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        handBreak = (Input.GetAxis("Jump") != 0) ? true : false;
     }
 }
