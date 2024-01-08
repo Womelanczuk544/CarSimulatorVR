@@ -63,6 +63,7 @@ public class Controller : MonoBehaviour
         {
             GetComponent<EngineAudio>().StopEngine();
         }
+        shifter();
         addDownForce();
         animateWheels();
         steerVehicle();
@@ -71,7 +72,7 @@ public class Controller : MonoBehaviour
         RotateSteeringWheel(IM.horizontal);
         checkClutch();
         calculateEnginePower();
-        shifter();
+        
     }
 
     private void calculateEnginePower()
