@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4000011056058346}
   - component: {fileID: 33000012759435720}
   - component: {fileID: 23000014210481516}
+  - component: {fileID: -8851065069854350812}
   m_Layer: 0
   m_Name: Downtown Exit Sign
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-8851065069854350812
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010167788182}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 65d9c8bb7a76d6544a135fce00bb351d, type: 3}

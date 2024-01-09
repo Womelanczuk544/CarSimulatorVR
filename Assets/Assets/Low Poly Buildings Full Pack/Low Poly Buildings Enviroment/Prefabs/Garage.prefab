@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4000013394042462}
   - component: {fileID: 33000013386852096}
   - component: {fileID: 23000011376623372}
+  - component: {fileID: -1450164028559489207}
   m_Layer: 0
   m_Name: Garage
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-1450164028559489207
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010931608486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0892038, y: 1.7206316, z: 3.185663}
+  m_Center: {x: -0.1536007, y: 0.8855853, z: -0.104089975}

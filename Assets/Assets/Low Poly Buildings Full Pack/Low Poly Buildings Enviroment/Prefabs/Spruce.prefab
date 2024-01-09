@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4000012017360650}
   - component: {fileID: 33000010388526958}
   - component: {fileID: 23000010096675850}
+  - component: {fileID: 1820104834002138092}
   m_Layer: 0
   m_Name: Spruce
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1820104834002138092
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010351056350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.65650654, y: 2.2186623, z: 0.65650654}
+  m_Center: {x: 0.000000014901161, y: 1.1109946, z: -0.0000027418137}
