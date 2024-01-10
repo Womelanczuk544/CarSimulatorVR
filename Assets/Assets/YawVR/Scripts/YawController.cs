@@ -249,6 +249,7 @@ namespace YawVR {
             //If we are in game, sending rotation command to simulator  based on the latest processed motion data
             if (state == ControllerState.Started || state == ControllerState.Connected) {
                 SendMotionData();
+                Debug.Log($"wysylam {orientation.pitch};{orientation.yaw};{orientation.roll};");
             }
         }
 
